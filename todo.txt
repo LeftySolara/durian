@@ -1,2 +1,6 @@
 - [ ] Write teardown method that triggers when the user clicks File->Exit
 - [ ] Create a settings file with default values for MPD connections
+
+Logging
+- [ ] Log errors to file
+- [ ] Log modes: debug, release
