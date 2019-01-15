@@ -1,9 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "mpdclient.h"
+
 #include <QMainWindow>
 #include <QLabel>
-#include <mpdclient.h>
+
 
 namespace Ui {
 class MainWindow;

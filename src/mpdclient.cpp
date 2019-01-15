@@ -21,7 +21,7 @@
  * along with Durian.  If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 
-#include <mpdclient.h>
+#include "mpdclient.h"
 
 MPDClient::MPDClient(QString host, unsigned int port, unsigned int timeout)
 {
