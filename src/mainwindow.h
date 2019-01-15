@@ -25,8 +25,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     MPDClient *mpd;
-
-    QLabel *testLabel;
 };
 
 #endif // MAINWINDOW_H
