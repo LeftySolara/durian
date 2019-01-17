@@ -1,5 +1,5 @@
 /******************************************************************************
- * mpdclient.h : an object representing an MPD connection
+ * mpdclient.cpp : an object representing an MPD connection
  * ****************************************************************************
  * Copyright (C) 2019 Jalen Adams
  *
