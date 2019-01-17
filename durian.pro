@@ -23,11 +23,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         src/main.cpp \
         src/mainwindow.cpp \
-        src/mpdclient.cpp
+        src/mpdclient.cpp \
+        src/logutils.cpp
 
 HEADERS += \
         src/mainwindow.h \
-        src/mpdclient.h
+        src/mpdclient.h \
+        src/logutils.h
 
 FORMS += \
         src/mainwindow.ui
