@@ -31,6 +31,14 @@ MPDClient::MPDClient(QString host, unsigned int port, unsigned int timeout)
 
     this->connection = mpd_connection_new(host.toStdString().c_str(), port, timeout);
     this->last_error = mpd_connection_get_error(connection);
+
+    if (last_error != MPD_ERROR_SUCCESS) {
+        const char *error_msg = mpd_connection_get_error_message(connection);
+        qCritical("Could not connect to MPD. Last error: %s", error_msg);
+    }
+    else {
+        qInfo("Connected to MPD.");
+    }
 }
 
 MPDClient::~MPDClient()
