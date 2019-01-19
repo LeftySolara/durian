@@ -6,7 +6,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     mpd = new MPDClient();
+    ui->queueTableView->setModel(mpd->queue_model);
 }
 
 MainWindow::~MainWindow()

@@ -42,6 +42,8 @@ public:
     virtual ~MPDClient();
 
     void fetchQueue();
+
+    QueueModel *queue_model;
 private:
     struct mpd_connection *connection;
     struct mpd_status *status;
@@ -55,8 +57,6 @@ private:
     unsigned int timeout;
     unsigned int queue_version;  // Changes every time the queue is updated
     const int max_playlist_length;
-
-    QueueModel *queue_model;
 };
 
 #endif // MPDCLIENT_H

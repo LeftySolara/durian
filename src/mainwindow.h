@@ -4,6 +4,7 @@
 #include "mpdclient.h"
 
 #include <QMainWindow>
+#include <QTableView>
 #include <QLabel>
 
 
