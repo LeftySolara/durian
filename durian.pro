@@ -24,12 +24,14 @@ SOURCES += \
         src/main.cpp \
         src/mainwindow.cpp \
         src/mpdclient.cpp \
-        src/logutils.cpp
+        src/logutils.cpp \
+        src/queuemodel.cpp
 
 HEADERS += \
         src/mainwindow.h \
         src/mpdclient.h \
-        src/logutils.h
+        src/logutils.h \
+        src/queuemodel.h
 
 FORMS += \
         src/mainwindow.ui
