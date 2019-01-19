@@ -23,7 +23,8 @@
 
 #include "mpdclient.h"
 
-MPDClient::MPDClient(QString host, unsigned int port, unsigned int timeout)
+MPDClient::MPDClient(QString host, unsigned int port, unsigned int timeout) :
+    max_playlist_length(16384)  // Max length defined by the MPD library
 {
     this->host = host;
     this->port = port;
@@ -34,12 +35,13 @@ MPDClient::MPDClient(QString host, unsigned int port, unsigned int timeout)
     this->connection = mpd_connection_new(host.toStdString().c_str(), port, timeout);
     this->last_error = mpd_connection_get_error(connection);
 
-    if (last_error != MPD_ERROR_SUCCESS) {
-        const char *error_msg = mpd_connection_get_error_message(connection);
-        qCritical("Could not connect to MPD. Last error: %s", error_msg);
+    if (last_error == MPD_ERROR_SUCCESS) {
+        qInfo("Connected to MPD.");
+        fetchQueue();
     }
     else {
-        qInfo("Connected to MPD.");
+        const char *error_msg = mpd_connection_get_error_message(connection);
+        qCritical("Could not connect to MPD. Last error: %s", error_msg);
     }
 }
 
@@ -47,6 +49,12 @@ MPDClient::~MPDClient()
 {
     if (connection) {
         mpd_connection_free(connection);
+    }
+    if (status) {
+        mpd_status_free(status);
+    }
+    if (current_song) {
+        mpd_song_free(current_song);
     }
 
     delete queue_model;
@@ -67,5 +75,7 @@ void MPDClient::fetchQueue()
     }
 
     mpd_response_finish(connection);
+    status = mpd_run_status(connection);
+    queue_version = mpd_status_get_queue_version(status);
     queue_model->setQueue(songs);
 }

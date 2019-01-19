@@ -44,12 +44,17 @@ public:
     void fetchQueue();
 private:
     struct mpd_connection *connection;
+    struct mpd_status *status;
+    struct mpd_song *current_song;
+
+    enum mpd_error last_error;
+    enum mpd_state state;
 
     QString host;
     unsigned int port;
     unsigned int timeout;
-
-    enum mpd_error last_error;
+    unsigned int queue_version;  // Changes every time the queue is updated
+    const int max_playlist_length;
 
     QueueModel *queue_model;
 };
