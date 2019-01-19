@@ -21,10 +21,10 @@
  * along with Durian.  If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 
-
 #ifndef MPDCLIENT_H
 #define MPDCLIENT_H
 
+#include "queuemodel.h"
 #include <mpd/client.h>
 #include <QObject>
 
@@ -41,8 +41,7 @@ public:
               unsigned int timeout = MPD_DEFAULT_TIMEOUT);
     virtual ~MPDClient();
 
-    enum mpd_error last_error; /* TODO: make this private once initial testing is done */
-
+    void fetchQueue();
 private:
     struct mpd_connection *connection;
 
@@ -50,6 +49,9 @@ private:
     unsigned int port;
     unsigned int timeout;
 
+    enum mpd_error last_error;
+
+    QueueModel *queue_model;
 };
 
 #endif // MPDCLIENT_H

@@ -43,6 +43,8 @@ public:
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
+    void setQueue(QVector<mpd_song *> queue) { songs = queue; }
+
     unsigned int playing_id;
 private:
     QVector<mpd_song *> songs;

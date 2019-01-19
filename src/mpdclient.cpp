@@ -29,6 +29,8 @@ MPDClient::MPDClient(QString host, unsigned int port, unsigned int timeout)
     this->port = port;
     this->timeout = timeout;
 
+    this->queue_model = new QueueModel();
+
     this->connection = mpd_connection_new(host.toStdString().c_str(), port, timeout);
     this->last_error = mpd_connection_get_error(connection);
 
@@ -46,4 +48,24 @@ MPDClient::~MPDClient()
     if (connection) {
         mpd_connection_free(connection);
     }
+
+    delete queue_model;
+}
+
+void MPDClient::fetchQueue()
+{
+    if (!connection) {
+        return;
+    }
+
+    QVector<mpd_song *> songs;
+    struct mpd_song *song;
+
+    mpd_send_list_queue_meta(connection);
+    while ((song = mpd_recv_song(connection))) {
+        songs.append(song);
+    }
+
+    mpd_response_finish(connection);
+    queue_model->setQueue(songs);
 }

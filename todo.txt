@@ -2,5 +2,9 @@
 - [ ] Create a settings file with default values for MPD connections
 
 Logging
-- [ ] Log errors to file
+- [x] Log errors to file
 - [ ] Log modes: debug, release
+
+Queue Model
+- [ ] Implement insertRows()
+- [ ] Implement removeRows()
