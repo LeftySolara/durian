@@ -27,6 +27,7 @@
 #include "queuemodel.h"
 #include <mpd/client.h>
 #include <QObject>
+#include <QTimer>
 
 #define MPD_DEFAULT_HOST "localhost"
 #define MPD_DEFAULT_PORT 6600
@@ -41,9 +42,14 @@ public:
               unsigned int timeout = MPD_DEFAULT_TIMEOUT);
     virtual ~MPDClient();
 
+    void update();
     void fetchQueue();
 
     QueueModel *queue_model;
+
+signals:
+    void queueChanged();
+
 private:
     struct mpd_connection *connection;
     struct mpd_status *status;
@@ -57,6 +63,8 @@ private:
     unsigned int timeout;
     unsigned int queue_version;  // Changes every time the queue is updated
     const int max_playlist_length;
+
+    QTimer *timer;
 };
 
 #endif // MPDCLIENT_H

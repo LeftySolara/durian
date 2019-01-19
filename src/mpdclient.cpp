@@ -32,6 +32,12 @@ MPDClient::MPDClient(QString host, unsigned int port, unsigned int timeout) :
 
     this->queue_model = new QueueModel();
 
+    // Create a timer to periodically check for updates to the MPD database.
+    // This will allow Durian to reflect changes made from other clients.
+    this->timer = new QTimer(this);
+    QObject::connect(timer, &QTimer::timeout, this, &MPDClient::update);
+    timer->start();
+
     this->connection = mpd_connection_new(host.toStdString().c_str(), port, timeout);
     this->last_error = mpd_connection_get_error(connection);
 
@@ -58,6 +64,28 @@ MPDClient::~MPDClient()
     }
 
     delete queue_model;
+}
+
+void MPDClient::update()
+{
+    unsigned int old_queue_version = queue_version;
+
+    status = mpd_run_status(connection);
+    current_song = mpd_run_current_song(connection);
+    state = mpd_status_get_state(status);
+    last_error = mpd_connection_get_error(connection);
+    queue_version = mpd_status_get_queue_version(status);
+
+    if (state == MPD_STATE_PLAY || state == MPD_STATE_PAUSE) {
+        queue_model->playing_id = mpd_song_get_id(current_song);
+    }
+    else {
+        queue_model->playing_id = 0;
+    }
+
+    if (old_queue_version != queue_version) {
+        emit queueChanged();
+    }
 }
 
 void MPDClient::fetchQueue()
