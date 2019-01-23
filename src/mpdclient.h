@@ -44,6 +44,7 @@ public:
 
     void update();
     void fetchQueue();
+    void playQueuePos(int pos);
 
     QueueModel *queue_model;
 

@@ -26,3 +26,8 @@ void MainWindow::on_actionAboutQt_triggered()
 {
     QApplication::aboutQt();
 }
+
+void MainWindow::on_queueTableView_doubleClicked(const QModelIndex &index)
+{
+    mpd->playQueuePos(index.row());
+}

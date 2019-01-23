@@ -107,3 +107,13 @@ void MPDClient::fetchQueue()
     queue_version = mpd_status_get_queue_version(status);
     queue_model->setQueue(songs);
 }
+
+void MPDClient::playQueuePos(int pos)
+{
+    if (pos < 0) {
+        return;
+    }
+
+    mpd_run_play_pos(connection, pos);
+    update();
+}

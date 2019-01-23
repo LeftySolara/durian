@@ -25,6 +25,9 @@ private slots:
     void on_actionExit_triggered();
     void on_actionAboutQt_triggered();
 
+    // Slots for the main table view
+    void on_queueTableView_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
     MPDClient *mpd;
