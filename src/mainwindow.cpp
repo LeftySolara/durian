@@ -30,4 +30,5 @@ void MainWindow::on_actionAboutQt_triggered()
 void MainWindow::on_queueTableView_doubleClicked(const QModelIndex &index)
 {
     mpd->playQueuePos(index.row());
+    ui->queueTableView->viewport()->update();
 }
