@@ -75,6 +75,11 @@ void MPDClient::update()
     playing_id = mpd_status_get_song_id(status);
     queue_model->playing_id = playing_id;
 
+    if (last_error != MPD_ERROR_SUCCESS) {
+        const char *error_msg = mpd_connection_get_error_message(connection);
+        qWarning("MPD Error: %s", error_msg);
+    }
+
     if (old_queue_version != queue_version || old_playing_id != playing_id) {
         emit queueChanged();
     }
@@ -95,8 +100,7 @@ void MPDClient::fetchQueue()
     }
 
     mpd_response_finish(connection);
-    status = mpd_run_status(connection);
-    queue_version = mpd_status_get_queue_version(status);
+    update();
     queue_model->setQueue(songs);
 }
 
