@@ -38,6 +38,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     MPDClient *mpd;
+
+    QLabel *label_current_song;
 };
 
 #endif // MAINWINDOW_H

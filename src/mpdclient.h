@@ -45,11 +45,15 @@ public:
     void update();
     void fetchQueue();
 
+    // Player controls
     void playQueuePos(int pos);
     void togglePause();
     void playPrev();
     void playNext();
     void stop();
+
+    // Information providers
+    QString getCurrentSongTitle();
 
     QueueModel *queue_model;
 

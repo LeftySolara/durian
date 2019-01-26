@@ -10,6 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
     mpd = new MPDClient();
     ui->queueTableView->setModel(mpd->queue_model);
 
+    label_current_song = new QLabel(mpd->getCurrentSongTitle());
+    statusBar()->addPermanentWidget(label_current_song);
+
     QObject::connect(mpd, &MPDClient::queueChanged,
                      this, &MainWindow::mpd_queueChanged);
 }
