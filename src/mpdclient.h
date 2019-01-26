@@ -59,10 +59,10 @@ signals:
 private:
     struct mpd_connection *connection;
     struct mpd_status *status;
-    struct mpd_song *current_song;
 
     enum mpd_error last_error;
     enum mpd_state state;
+    mpd_pure int playing_id; // ID of the currently playing song
 
     QString host;
     unsigned int port;

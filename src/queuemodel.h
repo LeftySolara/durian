@@ -45,7 +45,7 @@ public:
 
     void setQueue(QVector<mpd_song *> queue) { songs = queue; }
 
-    unsigned int playing_id;
+    mpd_pure int playing_id;
 private:
     QVector<mpd_song *> songs;
 };

@@ -59,9 +59,6 @@ MPDClient::~MPDClient()
     if (status) {
         mpd_status_free(status);
     }
-    if (current_song) {
-        mpd_song_free(current_song);
-    }
 
     delete queue_model;
 }
@@ -69,24 +66,14 @@ MPDClient::~MPDClient()
 void MPDClient::update()
 {
     unsigned int old_queue_version = queue_version;
-    unsigned int old_playing_id = 0;
-    if (current_song) {
-        old_playing_id = mpd_song_get_id(current_song);
-    }
+    mpd_pure int old_playing_id = playing_id;
 
     status = mpd_run_status(connection);
-    current_song = mpd_run_current_song(connection);
     state = mpd_status_get_state(status);
     last_error = mpd_connection_get_error(connection);
     queue_version = mpd_status_get_queue_version(status);
-    unsigned int playing_id = mpd_song_get_id(current_song);
-
-    if (state == MPD_STATE_PLAY || state == MPD_STATE_PAUSE) {
-        queue_model->playing_id = playing_id;
-    }
-    else {
-        queue_model->playing_id = 0;
-    }
+    playing_id = mpd_status_get_song_id(status);
+    queue_model->playing_id = playing_id;
 
     if (old_queue_version != queue_version || old_playing_id != playing_id) {
         emit queueChanged();
