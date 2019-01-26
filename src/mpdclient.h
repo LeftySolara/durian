@@ -62,13 +62,13 @@ private:
 
     enum mpd_error last_error;
     enum mpd_state state;
-    mpd_pure int playing_id; // ID of the currently playing song
+    mpd_pure int playing_id;          // ID of the currently playing song
+    mpd_pure unsigned queue_version;  // Changes every time the queue is updated
+    const int max_playlist_length;
 
     QString host;
     unsigned int port;
     unsigned int timeout;
-    unsigned int queue_version;  // Changes every time the queue is updated
-    const int max_playlist_length;
 
     QTimer *timer;
 };

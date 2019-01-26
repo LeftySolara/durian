@@ -65,7 +65,7 @@ MPDClient::~MPDClient()
 
 void MPDClient::update()
 {
-    unsigned int old_queue_version = queue_version;
+    mpd_pure unsigned old_queue_version = queue_version;
     mpd_pure int old_playing_id = playing_id;
 
     status = mpd_run_status(connection);
