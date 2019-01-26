@@ -28,6 +28,12 @@ private slots:
     // Slots for the main table view
     void on_queueTableView_doubleClicked(const QModelIndex &index);
 
+    // Slots for player control buttons
+    void on_buttonPlayPause_clicked();
+    void on_buttonPrev_clicked();
+    void on_buttonNext_clicked();
+    void on_buttonStop_clicked();
+
 private:
     Ui::MainWindow *ui;
     MPDClient *mpd;

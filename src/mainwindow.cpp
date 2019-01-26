@@ -32,3 +32,23 @@ void MainWindow::on_queueTableView_doubleClicked(const QModelIndex &index)
     mpd->playQueuePos(index.row());
     ui->queueTableView->viewport()->update();
 }
+
+void MainWindow::on_buttonPlayPause_clicked()
+{
+    mpd->togglePause();
+}
+
+void MainWindow::on_buttonPrev_clicked()
+{
+    mpd->playPrev();
+}
+
+void MainWindow::on_buttonNext_clicked()
+{
+    mpd->playNext();
+}
+
+void MainWindow::on_buttonStop_clicked()
+{
+    mpd->stop();
+}

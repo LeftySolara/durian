@@ -44,7 +44,12 @@ public:
 
     void update();
     void fetchQueue();
+
     void playQueuePos(int pos);
+    void togglePause();
+    void playPrev();
+    void playNext();
+    void stop();
 
     QueueModel *queue_model;
 

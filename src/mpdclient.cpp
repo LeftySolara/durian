@@ -122,3 +122,55 @@ void MPDClient::playQueuePos(int pos)
     mpd_run_play_pos(connection, pos);
     update();
 }
+
+void MPDClient::togglePause()
+{
+    if (state == MPD_STATE_STOP || state == MPD_STATE_UNKNOWN) {
+        return;
+    }
+
+    mpd_run_toggle_pause(connection);
+    last_error = mpd_connection_get_error(connection);
+}
+
+void MPDClient::playPrev()
+{
+    if (state == MPD_STATE_STOP || state == MPD_STATE_UNKNOWN) {
+        return;
+    }
+
+    mpd_run_previous(connection);
+    update();
+
+    // mpd_run_previous() doesn't change the internal queue version,
+    // but we still want to tell the view to update
+    emit queueChanged();
+}
+
+void MPDClient::playNext()
+{
+    if (state == MPD_STATE_STOP || state == MPD_STATE_UNKNOWN) {
+        return;
+    }
+
+    mpd_run_next(connection);
+    update();
+
+    // mpd_run_next() doesn't change the internal queue version,
+    // but we still want to tell the view to update
+    emit queueChanged();
+}
+
+void MPDClient::stop()
+{
+    if (state == MPD_STATE_STOP || state == MPD_STATE_UNKNOWN) {
+        return;
+    }
+
+    mpd_run_stop(connection);
+    update();
+
+    // mpd_run_stop() doesn't change the internal queue version,
+    // but we still want to tell the view to update
+    emit queueChanged();
+}
