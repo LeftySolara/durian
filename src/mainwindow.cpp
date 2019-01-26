@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->queueTableView->setModel(mpd->queue_model);
 
     QObject::connect(mpd, &MPDClient::queueChanged,
-                     this, &MainWindow::on_mpd_queueChanged);
+                     this, &MainWindow::mpd_queueChanged);
 }
 
 MainWindow::~MainWindow()
@@ -35,7 +35,7 @@ void MainWindow::on_queueTableView_doubleClicked(const QModelIndex &index)
     mpd->playQueuePos(index.row());
 }
 
-void MainWindow::on_mpd_queueChanged()
+void MainWindow::mpd_queueChanged()
 {
     ui->queueTableView->viewport()->update();
 }
