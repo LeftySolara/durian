@@ -121,6 +121,8 @@ void MPDClient::playQueuePos(int pos)
 
     mpd_run_play_pos(connection, pos);
     update();
+
+    emit queueChanged();
 }
 
 void MPDClient::togglePause()
