@@ -25,9 +25,10 @@ private slots:
     void on_actionExit_triggered();
     void on_actionAboutQt_triggered();
 
-    // Slots for the main table view
+    // Slots for the main view
     void on_queueTableView_doubleClicked(const QModelIndex &index);
     void mpd_queueChanged();
+    void mpd_playingTrackChanged();
 
     // Slots for player control buttons
     void on_buttonPlayPause_clicked();

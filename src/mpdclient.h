@@ -54,11 +54,13 @@ public:
 
     // Information providers
     QString getCurrentSongTag(mpd_tag_type tag);
+    bool is_stopped();
 
     QueueModel *queue_model;
 
 signals:
     void queueChanged();
+    void playingTrackChanged();
 
 private:
     struct mpd_connection *connection;

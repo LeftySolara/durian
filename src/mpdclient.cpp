@@ -80,8 +80,11 @@ void MPDClient::update()
         qWarning("MPD Error: %s", error_msg);
     }
 
-    if (old_queue_version != queue_version || old_playing_id != playing_id) {
+    if (old_queue_version != queue_version) {
         emit queueChanged();
+    }
+    if (old_playing_id != playing_id) {
+        emit playingTrackChanged();
     }
 }
 
@@ -112,8 +115,7 @@ void MPDClient::playQueuePos(int pos)
 
     mpd_run_play_pos(connection, pos);
     update();
-
-    emit queueChanged();
+    emit playingTrackChanged();
 }
 
 void MPDClient::togglePause()
@@ -134,10 +136,7 @@ void MPDClient::playPrev()
 
     mpd_run_previous(connection);
     update();
-
-    // mpd_run_previous() doesn't change the internal queue version,
-    // but we still want to tell the view to update
-    emit queueChanged();
+    emit playingTrackChanged();
 }
 
 void MPDClient::playNext()
@@ -148,10 +147,7 @@ void MPDClient::playNext()
 
     mpd_run_next(connection);
     update();
-
-    // mpd_run_next() doesn't change the internal queue version,
-    // but we still want to tell the view to update
-    emit queueChanged();
+    emit playingTrackChanged();
 }
 
 void MPDClient::stop()
@@ -162,10 +158,7 @@ void MPDClient::stop()
 
     mpd_run_stop(connection);
     update();
-
-    // mpd_run_stop() doesn't change the internal queue version,
-    // but we still want to tell the view to update
-    emit queueChanged();
+    emit playingTrackChanged();
 }
 
 // Get the value of a tag from the currently playing song.
@@ -179,4 +172,9 @@ QString MPDClient::getCurrentSongTag(mpd_tag_type tag)
     QString value = mpd_song_get_tag(current_song, tag, 0);
 
     return value;
+}
+
+bool MPDClient::is_stopped()
+{
+    return (state == MPD_STATE_STOP || state == MPD_STATE_UNKNOWN);
 }
