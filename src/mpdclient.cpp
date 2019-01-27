@@ -174,6 +174,25 @@ QString MPDClient::getCurrentSongTag(mpd_tag_type tag)
     return value;
 }
 
+unsigned MPDClient::getCurrentSongDuration()
+{
+    if (playing_id == -1) {
+        return 0;
+    }
+    struct mpd_song *current_song = mpd_run_current_song(connection);
+    return mpd_song_get_duration(current_song);
+}
+
+unsigned MPDClient::getCurrentSongElapsed()
+{
+    if (playing_id == -1) {
+        return 0;
+    }
+    else {
+        return mpd_status_get_elapsed_time(status);
+    }
+}
+
 bool MPDClient::is_stopped()
 {
     return (state == MPD_STATE_STOP || state == MPD_STATE_UNKNOWN);

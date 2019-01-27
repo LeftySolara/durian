@@ -6,6 +6,8 @@
 #include <QMainWindow>
 #include <QTableView>
 #include <QLabel>
+#include <QProgressBar>
+#include <QTimer>
 
 
 namespace Ui {
@@ -19,6 +21,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void updateSongProgressBar();
+    void updateSongProgressLabel();
+    void updateSongProgress();
 
 private slots:
     // Slots for menu items
@@ -41,6 +47,10 @@ private:
     MPDClient *mpd;
 
     QLabel *label_now_playing;
+    QLabel *label_time_elapsed;
+    QProgressBar *progress_bar;
+
+    QTimer *time_elapsed_timer;
 };
 
 #endif // MAINWINDOW_H

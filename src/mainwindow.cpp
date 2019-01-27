@@ -14,18 +14,67 @@ MainWindow::MainWindow(QWidget *parent) :
             + " - " + mpd->getCurrentSongTag(MPD_TAG_TITLE);
 
     label_now_playing = new QLabel(now_playing_string);
-    statusBar()->addPermanentWidget(label_now_playing);
+    label_time_elapsed = new QLabel();
 
+    progress_bar = ui->progressBar;
+    progress_bar->setMinimum(0);
+    progress_bar->setTextVisible(false);
+    updateSongProgress();
+
+    statusBar()->addPermanentWidget(label_now_playing);
+    statusBar()->addPermanentWidget(label_time_elapsed);
+
+    time_elapsed_timer = new QTimer(this);
+    QObject::connect(time_elapsed_timer, &QTimer::timeout,
+                     this, &MainWindow::updateSongProgress);
     QObject::connect(mpd, &MPDClient::queueChanged,
                      this, &MainWindow::mpd_queueChanged);
     QObject::connect(mpd, &MPDClient::playingTrackChanged,
                      this, &MainWindow::mpd_playingTrackChanged);
+
+    time_elapsed_timer->start(500);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     delete mpd;
+    delete label_now_playing;
+    delete time_elapsed_timer;
+}
+
+void MainWindow::updateSongProgressBar()
+{
+    mpd_pure unsigned song_length = mpd->getCurrentSongDuration();
+    mpd_pure unsigned time_elapsed = mpd->getCurrentSongElapsed();
+
+    progress_bar->setMaximum(song_length);
+    progress_bar->setValue(time_elapsed);
+}
+
+void MainWindow::updateSongProgressLabel()
+{
+    mpd_pure unsigned song_length = mpd->getCurrentSongDuration();
+    mpd_pure unsigned time_elapsed = mpd->getCurrentSongElapsed();
+
+    int total_minutes = song_length / 60;
+    int total_seconds = song_length % 60;
+    int elapsed_minutes = time_elapsed / 60;
+    int elapsed_seconds = time_elapsed % 60;
+
+    QString label = QString::asprintf("[%d:%02d/%d:%02d]",
+                   elapsed_minutes, elapsed_seconds,
+                   total_minutes, total_seconds);
+
+    label_time_elapsed->setText(label);
+}
+
+// Wrapper for updating all UI elements that display
+// the progress of the current song.
+void MainWindow::updateSongProgress()
+{
+    updateSongProgressBar();
+    updateSongProgressLabel();
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -60,6 +109,7 @@ void MainWindow::mpd_playingTrackChanged()
     }
 
     label_now_playing->setText(str_now_playing);
+    progress_bar->setMaximum(mpd->getCurrentSongDuration());
     ui->queueTableView->viewport()->update();
 }
 
