@@ -53,7 +53,7 @@ public:
     void stop();
 
     // Information providers
-    QString getCurrentSongTitle();
+    QString getCurrentSongTag(mpd_tag_type tag);
 
     QueueModel *queue_model;
 

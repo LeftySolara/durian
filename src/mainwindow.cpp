@@ -10,8 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     mpd = new MPDClient();
     ui->queueTableView->setModel(mpd->queue_model);
 
-    label_current_song = new QLabel(mpd->getCurrentSongTitle());
-    statusBar()->addPermanentWidget(label_current_song);
+    QString now_playing_string = mpd->getCurrentSongTag(MPD_TAG_ARTIST)
+            + " - " + mpd->getCurrentSongTag(MPD_TAG_TITLE);
+
+    label_now_playing = new QLabel(now_playing_string);
+    statusBar()->addPermanentWidget(label_now_playing);
 
     QObject::connect(mpd, &MPDClient::queueChanged,
                      this, &MainWindow::mpd_queueChanged);
@@ -40,6 +43,11 @@ void MainWindow::on_queueTableView_doubleClicked(const QModelIndex &index)
 
 void MainWindow::mpd_queueChanged()
 {
+    // TODO: Make a signal/slot for when the playing track changes, then put this there.
+    QString now_playing_string = mpd->getCurrentSongTag(MPD_TAG_ARTIST)
+            + " - " + mpd->getCurrentSongTag(MPD_TAG_TITLE);
+    label_now_playing->setText(now_playing_string);
+
     ui->queueTableView->viewport()->update();
 }
 

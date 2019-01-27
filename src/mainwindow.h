@@ -39,7 +39,7 @@ private:
     Ui::MainWindow *ui;
     MPDClient *mpd;
 
-    QLabel *label_current_song;
+    QLabel *label_now_playing;
 };
 
 #endif // MAINWINDOW_H

@@ -168,15 +168,15 @@ void MPDClient::stop()
     emit queueChanged();
 }
 
-// Get the title of the currently playing song.
+// Get the value of a tag from the currently playing song.
 // Mainly used for the status bar in the main window.
-QString MPDClient::getCurrentSongTitle()
+QString MPDClient::getCurrentSongTag(mpd_tag_type tag)
 {
     if (playing_id == -1) {
         return QString();
     }
     struct mpd_song *current_song = mpd_run_current_song(connection);
-    QString title = mpd_song_get_tag(current_song, MPD_TAG_TITLE, 0);
+    QString value = mpd_song_get_tag(current_song, tag, 0);
 
-    return title;
+    return value;
 }
