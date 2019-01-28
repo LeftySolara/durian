@@ -24,7 +24,8 @@ public:
 
     void updateSongProgressBar();
     void updateSongProgressLabel();
-    void updateSongProgress();
+    void updateRandomLabel();
+    void updateLabels();
 
 private slots:
     // Slots for menu items
@@ -48,6 +49,7 @@ private:
 
     QLabel *label_now_playing;
     QLabel *label_time_elapsed;
+    QLabel *label_random_mode;
     QProgressBar *progress_bar;
 
     QTimer *time_elapsed_timer;

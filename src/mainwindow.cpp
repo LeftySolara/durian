@@ -15,18 +15,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     label_now_playing = new QLabel(now_playing_string);
     label_time_elapsed = new QLabel();
+    label_random_mode = new QLabel();
 
     progress_bar = ui->progressBar;
     progress_bar->setMinimum(0);
     progress_bar->setTextVisible(false);
-    updateSongProgress();
+
+    updateLabels();
+    updateRandomLabel();
 
     statusBar()->addPermanentWidget(label_now_playing);
     statusBar()->addPermanentWidget(label_time_elapsed);
+    statusBar()->addPermanentWidget(label_random_mode);
 
     time_elapsed_timer = new QTimer(this);
     QObject::connect(time_elapsed_timer, &QTimer::timeout,
-                     this, &MainWindow::updateSongProgress);
+                     this, &MainWindow::updateLabels);
     QObject::connect(mpd, &MPDClient::queueChanged,
                      this, &MainWindow::mpd_queueChanged);
     QObject::connect(mpd, &MPDClient::playingTrackChanged,
@@ -69,12 +73,22 @@ void MainWindow::updateSongProgressLabel()
     label_time_elapsed->setText(label);
 }
 
-// Wrapper for updating all UI elements that display
-// the progress of the current song.
-void MainWindow::updateSongProgress()
+// Wrapper for updating all UI labels
+void MainWindow::updateLabels()
 {
     updateSongProgressBar();
     updateSongProgressLabel();
+    updateRandomLabel();
+}
+
+void MainWindow::updateRandomLabel()
+{
+    if (mpd->randomModeActive()) {
+        label_random_mode->setText("Random Mode: on");
+    }
+    else {
+        label_random_mode->setText("Random Mode: off");
+    }
 }
 
 void MainWindow::on_actionExit_triggered()

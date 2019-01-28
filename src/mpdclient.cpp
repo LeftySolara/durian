@@ -197,3 +197,8 @@ bool MPDClient::isStopped()
 {
     return (state == MPD_STATE_STOP || state == MPD_STATE_UNKNOWN);
 }
+
+bool MPDClient::randomModeActive()
+{
+    return mpd_status_get_random(status);
+}

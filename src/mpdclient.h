@@ -57,6 +57,7 @@ public:
     mpd_pure unsigned getCurrentSongDuration();
     mpd_pure unsigned getCurrentSongElapsed();
     bool isStopped();
+    bool randomModeActive();
 
     QueueModel *queue_model;
 
