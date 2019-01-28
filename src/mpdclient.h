@@ -56,7 +56,7 @@ public:
     QString getCurrentSongTag(mpd_tag_type tag);
     mpd_pure unsigned getCurrentSongDuration();
     mpd_pure unsigned getCurrentSongElapsed();
-    bool is_stopped();
+    bool isStopped();
 
     QueueModel *queue_model;
 

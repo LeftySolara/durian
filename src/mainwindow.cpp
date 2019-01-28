@@ -100,7 +100,7 @@ void MainWindow::mpd_queueChanged()
 void MainWindow::mpd_playingTrackChanged()
 {
     QString str_now_playing;
-    if (mpd->is_stopped()) {
+    if (mpd->isStopped()) {
         str_now_playing = "";
     }
     else {

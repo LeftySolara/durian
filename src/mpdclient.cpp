@@ -193,7 +193,7 @@ unsigned MPDClient::getCurrentSongElapsed()
     }
 }
 
-bool MPDClient::is_stopped()
+bool MPDClient::isStopped()
 {
     return (state == MPD_STATE_STOP || state == MPD_STATE_UNKNOWN);
 }
