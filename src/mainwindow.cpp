@@ -16,17 +16,20 @@ MainWindow::MainWindow(QWidget *parent) :
     label_now_playing = new QLabel(now_playing_string);
     label_time_elapsed = new QLabel();
     label_random_mode = new QLabel();
+    label_repeat_mode = new QLabel();
+    label_single_mode = new QLabel();
 
     progress_bar = ui->progressBar;
     progress_bar->setMinimum(0);
     progress_bar->setTextVisible(false);
 
     updateLabels();
-    updateRandomLabel();
 
     statusBar()->addPermanentWidget(label_now_playing);
     statusBar()->addPermanentWidget(label_time_elapsed);
     statusBar()->addPermanentWidget(label_random_mode);
+    statusBar()->addPermanentWidget(label_repeat_mode);
+    statusBar()->addPermanentWidget(label_single_mode);
 
     time_elapsed_timer = new QTimer(this);
     QObject::connect(time_elapsed_timer, &QTimer::timeout,
@@ -44,6 +47,10 @@ MainWindow::~MainWindow()
     delete ui;
     delete mpd;
     delete label_now_playing;
+    delete label_time_elapsed;
+    delete label_random_mode;
+    delete label_repeat_mode;
+    delete label_single_mode;
     delete time_elapsed_timer;
 }
 
@@ -79,6 +86,8 @@ void MainWindow::updateLabels()
     updateSongProgressBar();
     updateSongProgressLabel();
     updateRandomLabel();
+    updateRepeatLabel();
+    updateSingleLabel();
 }
 
 void MainWindow::updateRandomLabel()
@@ -91,6 +100,29 @@ void MainWindow::updateRandomLabel()
         label_random_mode->setText("Random Mode: off");
     }
     ui->actionRandomMode->setChecked(random_active);
+}
+
+void MainWindow::updateRepeatLabel()
+{
+    bool repeat_active = mpd->repeatModeActive();
+    if (repeat_active) {
+        label_repeat_mode->setText("Repeat Mode: on");
+    }
+    else {
+        label_repeat_mode->setText("Repeat Mode: off");
+    }
+}
+
+void MainWindow::updateSingleLabel()
+{
+    bool single_active = mpd->singleModeActive();
+    if (single_active) {
+        label_single_mode->setText("Single Mode: on");
+    }
+    else {
+        label_single_mode->setText("Single Mode: off");
+        ui->actionSingleMode->setChecked(single_active);
+    }
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -116,6 +148,16 @@ void MainWindow::on_actionStop_triggered()
 void MainWindow::on_actionRandomMode_triggered()
 {
     mpd->toggleRandom();
+}
+
+void MainWindow::on_actionRepeatMode_triggered()
+{
+    mpd->toggleRepeat();
+}
+
+void MainWindow::on_actionSingleMode_triggered()
+{
+    mpd->toggleSingle();
 }
 
 void MainWindow::on_queueTableView_doubleClicked(const QModelIndex &index)
@@ -163,4 +205,3 @@ void MainWindow::on_buttonStop_clicked()
 {
     mpd->stop();
 }
-

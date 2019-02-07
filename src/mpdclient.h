@@ -51,14 +51,20 @@ public:
     void playPrev();
     void playNext();
     void stop();
+
     void toggleRandom();
+    void toggleRepeat();
+    void toggleSingle();
 
     // Information providers
     QString getCurrentSongTag(mpd_tag_type tag);
     mpd_pure unsigned getCurrentSongDuration();
     mpd_pure unsigned getCurrentSongElapsed();
     bool isStopped();
+
     bool randomModeActive();
+    bool repeatModeActive();
+    bool singleModeActive();
 
     QueueModel *queue_model;
 

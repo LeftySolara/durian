@@ -118,6 +118,8 @@
     <addaction name="actionStop"/>
     <addaction name="separator"/>
     <addaction name="actionRandomMode"/>
+    <addaction name="actionRepeatMode"/>
+    <addaction name="actionSingleMode"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuPlayback"/>
@@ -162,6 +164,22 @@
    </property>
    <property name="toolTip">
     <string>Random Mode</string>
+   </property>
+  </action>
+  <action name="actionSingleMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Single Mode</string>
+   </property>
+  </action>
+  <action name="actionRepeatMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Repeat Mode</string>
    </property>
   </action>
  </widget>

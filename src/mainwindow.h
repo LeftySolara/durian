@@ -25,6 +25,8 @@ public:
     void updateSongProgressBar();
     void updateSongProgressLabel();
     void updateRandomLabel();
+    void updateRepeatLabel();
+    void updateSingleLabel();
     void updateLabels();
 
 private slots:
@@ -36,6 +38,8 @@ private slots:
     void on_actionStop_triggered();
 
     void on_actionRandomMode_triggered();
+    void on_actionRepeatMode_triggered();
+    void on_actionSingleMode_triggered();
 
     // Slots for the main view
     void on_queueTableView_doubleClicked(const QModelIndex &index);
@@ -55,6 +59,8 @@ private:
     QLabel *label_now_playing;
     QLabel *label_time_elapsed;
     QLabel *label_random_mode;
+    QLabel *label_repeat_mode;
+    QLabel *label_single_mode;
     QProgressBar *progress_bar;
 
     QTimer *time_elapsed_timer;
