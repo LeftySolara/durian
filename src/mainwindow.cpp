@@ -83,12 +83,14 @@ void MainWindow::updateLabels()
 
 void MainWindow::updateRandomLabel()
 {
-    if (mpd->randomModeActive()) {
+    bool random_active = mpd->randomModeActive();
+    if (random_active) {
         label_random_mode->setText("Random Mode: on");
     }
     else {
         label_random_mode->setText("Random Mode: off");
     }
+    ui->actionRandomMode->setChecked(random_active);
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -99,6 +101,21 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionAboutQt_triggered()
 {
     QApplication::aboutQt();
+}
+
+void MainWindow::on_actionPlayPause_triggered()
+{
+    mpd->togglePause();
+}
+
+void MainWindow::on_actionStop_triggered()
+{
+    mpd->stop();
+}
+
+void MainWindow::on_actionRandomMode_triggered()
+{
+    mpd->toggleRandom();
 }
 
 void MainWindow::on_queueTableView_doubleClicked(const QModelIndex &index)
@@ -146,3 +163,4 @@ void MainWindow::on_buttonStop_clicked()
 {
     mpd->stop();
 }
+

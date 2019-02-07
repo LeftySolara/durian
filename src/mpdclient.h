@@ -51,6 +51,7 @@ public:
     void playPrev();
     void playNext();
     void stop();
+    void toggleRandom();
 
     // Information providers
     QString getCurrentSongTag(mpd_tag_type tag);

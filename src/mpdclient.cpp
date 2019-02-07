@@ -161,6 +161,11 @@ void MPDClient::stop()
     emit playingTrackChanged();
 }
 
+void MPDClient::toggleRandom()
+{
+    mpd_run_random(connection, !randomModeActive());
+}
+
 // Get the value of a tag from the currently playing song.
 // Mainly used for the status bar in the main window.
 QString MPDClient::getCurrentSongTag(mpd_tag_type tag)

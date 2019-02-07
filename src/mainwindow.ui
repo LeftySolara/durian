@@ -95,7 +95,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>30</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -110,7 +110,17 @@
     </property>
     <addaction name="actionAboutQt"/>
    </widget>
+   <widget class="QMenu" name="menuPlayback">
+    <property name="title">
+     <string>Playback</string>
+    </property>
+    <addaction name="actionPlayPause"/>
+    <addaction name="actionStop"/>
+    <addaction name="separator"/>
+    <addaction name="actionRandomMode"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuPlayback"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
@@ -131,6 +141,27 @@
   <action name="actionAboutQt">
    <property name="text">
     <string>About Qt...</string>
+   </property>
+  </action>
+  <action name="actionPlayPause">
+   <property name="text">
+    <string>Play/Pause</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionRandomMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Random Mode</string>
+   </property>
+   <property name="toolTip">
+    <string>Random Mode</string>
    </property>
   </action>
  </widget>
