@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     label_random_mode = new QLabel();
     label_repeat_mode = new QLabel();
     label_single_mode = new QLabel();
+    label_consume_mode = new QLabel();
 
     progress_bar = ui->progressBar;
     progress_bar->setMinimum(0);
@@ -30,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->addPermanentWidget(label_random_mode);
     statusBar()->addPermanentWidget(label_repeat_mode);
     statusBar()->addPermanentWidget(label_single_mode);
+    statusBar()->addPermanentWidget(label_consume_mode);
 
     time_elapsed_timer = new QTimer(this);
     QObject::connect(time_elapsed_timer, &QTimer::timeout,
@@ -51,6 +53,7 @@ MainWindow::~MainWindow()
     delete label_random_mode;
     delete label_repeat_mode;
     delete label_single_mode;
+    delete label_consume_mode;
     delete time_elapsed_timer;
 }
 
@@ -88,6 +91,7 @@ void MainWindow::updateLabels()
     updateRandomLabel();
     updateRepeatLabel();
     updateSingleLabel();
+    updateConsumeLabel();
 }
 
 void MainWindow::updateRandomLabel()
@@ -111,6 +115,7 @@ void MainWindow::updateRepeatLabel()
     else {
         label_repeat_mode->setText("Repeat Mode: off");
     }
+    ui->actionRepeatMode->setChecked(repeat_active);
 }
 
 void MainWindow::updateSingleLabel()
@@ -121,8 +126,20 @@ void MainWindow::updateSingleLabel()
     }
     else {
         label_single_mode->setText("Single Mode: off");
-        ui->actionSingleMode->setChecked(single_active);
     }
+    ui->actionSingleMode->setChecked(single_active);
+}
+
+void MainWindow::updateConsumeLabel()
+{
+    bool consume_active = mpd->consumeModeActive();
+    if (consume_active) {
+        label_consume_mode->setText("Consume Mode: on");
+    }
+    else {
+        label_consume_mode->setText("Consume Mode: off");
+    }
+    ui->actionConsumeMode->setChecked(consume_active);
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -158,6 +175,11 @@ void MainWindow::on_actionRepeatMode_triggered()
 void MainWindow::on_actionSingleMode_triggered()
 {
     mpd->toggleSingle();
+}
+
+void MainWindow::on_actionConsumeMode_triggered()
+{
+    mpd->toggleConsume();
 }
 
 void MainWindow::on_queueTableView_doubleClicked(const QModelIndex &index)

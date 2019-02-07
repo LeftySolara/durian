@@ -55,6 +55,7 @@ public:
     void toggleRandom();
     void toggleRepeat();
     void toggleSingle();
+    void toggleConsume();
 
     // Information providers
     QString getCurrentSongTag(mpd_tag_type tag);
@@ -65,6 +66,7 @@ public:
     bool randomModeActive();
     bool repeatModeActive();
     bool singleModeActive();
+    bool consumeModeActive();
 
     QueueModel *queue_model;
 

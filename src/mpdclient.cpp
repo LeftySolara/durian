@@ -176,6 +176,11 @@ void MPDClient::toggleSingle()
     mpd_run_single(connection, !singleModeActive());
 }
 
+void MPDClient::toggleConsume()
+{
+    mpd_run_consume(connection, !consumeModeActive());
+}
+
 // Get the value of a tag from the currently playing song.
 // Mainly used for the status bar in the main window.
 QString MPDClient::getCurrentSongTag(mpd_tag_type tag)
@@ -226,4 +231,9 @@ bool MPDClient::repeatModeActive()
 bool MPDClient::singleModeActive()
 {
     return mpd_status_get_single(status);
+}
+
+bool MPDClient::consumeModeActive()
+{
+    return mpd_status_get_consume(status);
 }

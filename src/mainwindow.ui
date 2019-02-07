@@ -120,6 +120,7 @@
     <addaction name="actionRandomMode"/>
     <addaction name="actionRepeatMode"/>
     <addaction name="actionSingleMode"/>
+    <addaction name="actionConsumeMode"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuPlayback"/>
@@ -180,6 +181,14 @@
    </property>
    <property name="text">
     <string>Repeat Mode</string>
+   </property>
+  </action>
+  <action name="actionConsumeMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Consume Mode</string>
    </property>
   </action>
  </widget>

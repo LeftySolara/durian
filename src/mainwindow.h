@@ -27,6 +27,7 @@ public:
     void updateRandomLabel();
     void updateRepeatLabel();
     void updateSingleLabel();
+    void updateConsumeLabel();
     void updateLabels();
 
 private slots:
@@ -40,6 +41,7 @@ private slots:
     void on_actionRandomMode_triggered();
     void on_actionRepeatMode_triggered();
     void on_actionSingleMode_triggered();
+    void on_actionConsumeMode_triggered();
 
     // Slots for the main view
     void on_queueTableView_doubleClicked(const QModelIndex &index);
@@ -61,6 +63,7 @@ private:
     QLabel *label_random_mode;
     QLabel *label_repeat_mode;
     QLabel *label_single_mode;
+    QLabel *label_consume_mode;
     QProgressBar *progress_bar;
 
     QTimer *time_elapsed_timer;
